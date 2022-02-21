@@ -70,5 +70,36 @@ namespace PassOrganiser
                 }
             }
         }
+
+        private void txt_fastline_KeyPress ( object sender, KeyPressEventArgs e )
+        {
+            if (e.KeyChar == (char) Keys.Return)
+            {
+                dbConnection conn = new dbConnection ();
+                string[] connCredentials = txt_fastline.Text.Split(" ");
+
+                if ( connCredentials[0].Trim ().ToLower () != "" && connCredentials [ 1 ].Trim ().ToLower () != "" || txt_fastline.Text =="")
+                {
+                    if ( conn.verifyLogin (connCredentials [ 0 ].Trim ().ToLower (), connCredentials [ 1 ].Trim ().ToLower ())
+                       )
+                    {
+                        AdaugInformatii adaugInformatii = new AdaugInformatii ();
+                        adaugInformatii.RefToConectare = this;
+                        this.Visible = false;
+                        adaugInformatii.Show ();
+                    }
+                    else
+                    {
+                        MessageBox.Show ("Parola sau utilizatorul gresite. Incercati din nou");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show ("Campurile nu pot fi goale. Introduceti utilizator si parola");
+                }
+
+                this.Visible = false;
+            }
+        }
     }
 }

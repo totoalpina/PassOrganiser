@@ -14,13 +14,13 @@ namespace PassOrganiser.connection
         private string password;
 
         //Constructor
-        public dbConnection()
+        public dbConnection ( )
         {
-            Initialize();
+            Initialize ();
         }
 
         //Initialize values
-        private void Initialize()
+        private void Initialize ( )
         {
             server = "localhost";
             database = "password_organiser";
@@ -30,27 +30,27 @@ namespace PassOrganiser.connection
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
 
-            connection = new MySqlConnection(connectionString);
+            connection = new MySqlConnection (connectionString);
         }
 
         //open connection to database
-        private bool OpenConnection()
+        private bool OpenConnection ( )
         {
             try
             {
-                connection.Open();
+                connection.Open ();
                 return true;
             }
-            catch (MySqlException ex)
+            catch ( MySqlException ex )
             {
-                switch (ex.Number)
+                switch ( ex.Number )
                 {
                     case 0:
-                        MessageBox.Show("Cannot connect to server.  Contact administrator");
+                        MessageBox.Show ("Cannot connect to server.  Contact administrator");
                         break;
 
                     case 1045:
-                        MessageBox.Show("Invalid username/password, please try again");
+                        MessageBox.Show ("Invalid username/password, please try again");
                         break;
                 }
                 return false;
@@ -58,49 +58,49 @@ namespace PassOrganiser.connection
         }
 
         //Close connection
-        private bool CloseConnection()
+        private bool CloseConnection ( )
         {
             try
             {
-                connection.Close();
+                connection.Close ();
                 return true;
             }
-            catch (MySqlException ex)
+            catch ( MySqlException ex )
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show (ex.Message);
                 return false;
             }
         }
 
-        public void Insert(string query)
+        public void Insert ( string query )
         {
-            if (this.OpenConnection() == true)
+            if ( this.OpenConnection () == true )
             {
                 //create command and assign the query and connection from the constructor
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand (query, connection);
 
                 //Execute command
-                cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery ();
 
                 //close connection
-                this.CloseConnection();
+                this.CloseConnection ();
             }
         }
         // Select cont by ID 
-        public Cont selectCont(long id)
+        public Cont selectCont ( long id )
         {
             string query = "SELECT * FROM conturi WHERE id = " + id + ";";
-            Cont editCont = new Cont();
+            Cont editCont = new Cont ();
             if ( this.OpenConnection () == true )
             {
                 MySqlCommand cmd = new MySqlCommand (query, connection);
-                MySqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
+                MySqlDataReader dr = cmd.ExecuteReader ();
+                while ( dr.Read () )
                 {
-                    editCont.id = long.Parse(dr["id"].ToString());
-                    editCont.userName = dr["username"].ToString();
-                    editCont.password = dr["password"].ToString();
-                    editCont.categorie = dr [ "categorie" ].ToString();
+                    editCont.id = long.Parse (dr [ "id" ].ToString ());
+                    editCont.userName = dr [ "username" ].ToString ();
+                    editCont.password = dr [ "password" ].ToString ();
+                    editCont.categorie = dr [ "categorie" ].ToString ();
                     editCont.description = dr [ "description" ].ToString ();
                 }
                 this.CloseConnection ();
@@ -110,12 +110,12 @@ namespace PassOrganiser.connection
         }
 
         //Update statement
-        public void Update(string query)
+        public void Update ( string query )
         {
-            if (this.OpenConnection() == true)
+            if ( this.OpenConnection () == true )
             {
                 //create mysql command
-                MySqlCommand cmd = new MySqlCommand();
+                MySqlCommand cmd = new MySqlCommand ();
                 //Assign the query using CommandText
                 cmd.CommandText = query;
                 //Assign the connection using Connection
@@ -125,22 +125,22 @@ namespace PassOrganiser.connection
                 string message = cmd.ExecuteNonQuery () > 0 ? "Inregistrare editata cu succes" : "Editare esuata";
                 MessageBox.Show (message);
                 //close connection
-                this.CloseConnection();
+                this.CloseConnection ();
             }
         }
 
         //Delete statement
-        public void Delete(string query)
+        public void Delete ( string query )
         {
-            if (this.OpenConnection() == true)
+            if ( this.OpenConnection () == true )
             {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                cmd.ExecuteNonQuery();
-                this.CloseConnection();
+                MySqlCommand cmd = new MySqlCommand (query, connection);
+                cmd.ExecuteNonQuery ();
+                this.CloseConnection ();
             }
         }
 
-        public List<Cont> SelectAll()
+        public List<Cont> SelectAll ( )
         {
             List<Cont> allitems = new List<Cont> ();
             if ( this.OpenConnection () == true )
@@ -162,53 +162,57 @@ namespace PassOrganiser.connection
             return allitems;
         }
 
-        public List<Cont> Search(string query)
+        public List<Cont> Search ( string query )
         {
-            List<Cont> searchList = new List<Cont>();
-            if (this.OpenConnection() == true)
+            List<Cont> searchList = new List<Cont> ();
+            if ( this.OpenConnection () == true )
             {
 
 
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+                MySqlCommand cmd = new MySqlCommand (query, connection);
+                MySqlDataReader dataReader = cmd.ExecuteReader ();
 
-                while (dataReader.Read())
+                while ( dataReader.Read () )
                 {
-                    searchList.Add(new Cont(long.Parse(dataReader [ "id" ].ToString()), dataReader ["categorie"].ToString(), dataReader["username"].ToString(), dataReader["password"].ToString(), dataReader["description"].ToString()));
+                    searchList.Add (new Cont (long.Parse (dataReader [ "id" ].ToString ()), dataReader [ "categorie" ].ToString (), dataReader [ "username" ].ToString (), dataReader [ "password" ].ToString (), dataReader [ "description" ].ToString ()));
 
                 }
-                dataReader.Close();
-                this.CloseConnection();
+                dataReader.Close ();
+                this.CloseConnection ();
                 return searchList;
             }
             return searchList;
         }
 
-        public bool verifyLogin(string username, string pass)
+        public bool verifyLogin ( string username, string pass )
         {
             MySqlDataReader dataReader;
-            string query = "SELECT * FROM users WHERE username = '" + username + "'";
+            string query = $"SELECT * FROM users WHERE " +
+                           $" username = '{username}' " +
+                           $" AND password = '{pass}';";
             try
             {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                dataReader = cmd.ExecuteReader();
-                while (dataReader.Read())
+                connection.Open ();
+                MySqlCommand cmd = new MySqlCommand (query, connection);
+                dataReader = cmd.ExecuteReader ();
+                if ( dataReader.HasRows )
                 {
-                    if (username.Equals(dataReader.GetValue(1).ToString()) && pass.Equals(dataReader.GetValue(2).ToString()))
-                    {
-                        MessageBox.Show("Conectare resuita");
-                        return true;
-                    }
+                    return true;
                 }
-                return false;
-            } catch (MySqlException ex)
+                else
+                {
+                    MessageBox.Show ("Stai jos 4 !");
+                    return false;
+                }
+
+            }
+            catch ( MySqlException ex )
             {
-                MessageBox.Show("Username sau password gresite. Please try again");
+                MessageBox.Show ("Username sau password gresite. Please try again");
                 return false;
             }
-            dataReader.Close();
-            this.CloseConnection();
+            dataReader.Close ();
+            this.CloseConnection ();
 
         }
     }

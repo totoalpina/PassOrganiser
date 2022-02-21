@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.pnl_main = new System.Windows.Forms.Panel();
+            this.txt_fastline = new System.Windows.Forms.TextBox();
+            this.lbl = new System.Windows.Forms.Label();
             this.btn_intra = new System.Windows.Forms.Button();
             this.lbl_Password = new System.Windows.Forms.Label();
             this.lbl_UserName = new System.Windows.Forms.Label();
@@ -43,6 +45,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnl_main.BackColor = System.Drawing.Color.SkyBlue;
+            this.pnl_main.Controls.Add(this.txt_fastline);
+            this.pnl_main.Controls.Add(this.lbl);
             this.pnl_main.Controls.Add(this.btn_intra);
             this.pnl_main.Controls.Add(this.lbl_Password);
             this.pnl_main.Controls.Add(this.lbl_UserName);
@@ -52,6 +56,25 @@
             this.pnl_main.Name = "pnl_main";
             this.pnl_main.Size = new System.Drawing.Size(560, 337);
             this.pnl_main.TabIndex = 0;
+            // 
+            // txt_fastline
+            // 
+            this.txt_fastline.Location = new System.Drawing.Point(196, 84);
+            this.txt_fastline.Name = "txt_fastline";
+            this.txt_fastline.PasswordChar = '*';
+            this.txt_fastline.Size = new System.Drawing.Size(215, 21);
+            this.txt_fastline.TabIndex = 0;
+            this.txt_fastline.Text = "ioana ioana";
+            this.txt_fastline.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_fastline_KeyPress);
+            // 
+            // lbl
+            // 
+            this.lbl.AutoSize = true;
+            this.lbl.Location = new System.Drawing.Point(71, 85);
+            this.lbl.Name = "lbl";
+            this.lbl.Size = new System.Drawing.Size(119, 16);
+            this.lbl.TabIndex = 5;
+            this.lbl.Text = "Fastline Connect";
             // 
             // btn_intra
             // 
@@ -149,5 +172,7 @@
         private TextBox txt_Password;
         private TextBox txt_UserName;
         private Button btn_intra;
+        private TextBox txt_fastline;
+        private Label lbl;
     }
 }
