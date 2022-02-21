@@ -14,6 +14,7 @@ namespace PassOrganiser.Entities
         public string userName { get; set; }
         public string password { get; set; }
         public string description { get; set; }
+        public string concatAllProperties { get; set; }
 
         public Cont()
         {
@@ -27,6 +28,7 @@ namespace PassOrganiser.Entities
             this.userName = userName;
             this.password = password;
             this.description = description;
+            this.concatAllProperties = concatProperties();
         }
         public Cont ( long id, string categorie, string userName, string password, string description )
         {
@@ -35,6 +37,7 @@ namespace PassOrganiser.Entities
             this.userName = userName;
             this.password = password;
             this.description = description;
+            this.concatAllProperties = concatProperties ();
         }
 
         private long generateRandomID()
@@ -63,6 +66,12 @@ namespace PassOrganiser.Entities
         {
             return "username = " + userName + "\n" 
                 + "parola = " + password ;
+        }
+
+        private string concatProperties()
+        {
+            return Regex.Replace(
+                (categorie + userName + description).ToLower(), @"\d|\W", "");
         }
     }
 }

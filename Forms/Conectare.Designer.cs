@@ -52,7 +52,6 @@
             this.pnl_main.Name = "pnl_main";
             this.pnl_main.Size = new System.Drawing.Size(560, 337);
             this.pnl_main.TabIndex = 0;
-            this.pnl_main.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // btn_intra
             // 
@@ -106,6 +105,8 @@
             this.txt_Password.PasswordChar = '*';
             this.txt_Password.Size = new System.Drawing.Size(215, 21);
             this.txt_Password.TabIndex = 1;
+            this.txt_Password.Text = "ioana";
+            this.txt_Password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Password_KeyPress);
             // 
             // txt_UserName
             // 
@@ -117,6 +118,8 @@
             this.txt_UserName.Name = "txt_UserName";
             this.txt_UserName.Size = new System.Drawing.Size(215, 21);
             this.txt_UserName.TabIndex = 0;
+            this.txt_UserName.Text = "ioana";
+            this.txt_UserName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_UserName_KeyPress);
             // 
             // frm_main
             // 

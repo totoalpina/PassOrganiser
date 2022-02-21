@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent ( )
         {
+            this.components = new System.ComponentModel.Container();
             this.pnl_editare = new System.Windows.Forms.Panel();
+            this.txt_edit_save = new System.Windows.Forms.Button();
             this.lbl_edit_description = new System.Windows.Forms.Label();
             this.lbl_edit_password = new System.Windows.Forms.Label();
             this.lbl_edit_username = new System.Windows.Forms.Label();
@@ -38,8 +40,9 @@
             this.txt_edit_password = new System.Windows.Forms.TextBox();
             this.txt_edit_username = new System.Windows.Forms.TextBox();
             this.txt_edit_categorie = new System.Windows.Forms.TextBox();
-            this.txt_edit_save = new System.Windows.Forms.Button();
+            this.fileExplorerAssistant1 = new DevExpress.XtraDialogs.FileExplorerAssistant(this.components);
             this.pnl_editare.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileExplorerAssistant1)).BeginInit();
             this.SuspendLayout();
             // 
             // pnl_editare
@@ -61,6 +64,18 @@
             this.pnl_editare.Name = "pnl_editare";
             this.pnl_editare.Size = new System.Drawing.Size(560, 340);
             this.pnl_editare.TabIndex = 0;
+            // 
+            // txt_edit_save
+            // 
+            this.txt_edit_save.BackColor = System.Drawing.Color.YellowGreen;
+            this.txt_edit_save.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.txt_edit_save.Location = new System.Drawing.Point(431, 18);
+            this.txt_edit_save.Name = "txt_edit_save";
+            this.txt_edit_save.Size = new System.Drawing.Size(111, 35);
+            this.txt_edit_save.TabIndex = 9;
+            this.txt_edit_save.Text = "Salveaza";
+            this.txt_edit_save.UseVisualStyleBackColor = false;
+            this.txt_edit_save.Click += new System.EventHandler(this.txt_edit_save_Click);
             // 
             // lbl_edit_description
             // 
@@ -150,17 +165,9 @@
             this.txt_edit_categorie.Size = new System.Drawing.Size(362, 23);
             this.txt_edit_categorie.TabIndex = 0;
             // 
-            // txt_edit_save
+            // fileExplorerAssistant1
             // 
-            this.txt_edit_save.BackColor = System.Drawing.Color.YellowGreen;
-            this.txt_edit_save.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.txt_edit_save.Location = new System.Drawing.Point(431, 18);
-            this.txt_edit_save.Name = "txt_edit_save";
-            this.txt_edit_save.Size = new System.Drawing.Size(111, 35);
-            this.txt_edit_save.TabIndex = 9;
-            this.txt_edit_save.Text = "Salveaza";
-            this.txt_edit_save.UseVisualStyleBackColor = false;
-            this.txt_edit_save.Click += new System.EventHandler(this.txt_edit_save_Click);
+            this.fileExplorerAssistant1.Form = this;
             // 
             // Editare
             // 
@@ -177,6 +184,7 @@
             this.Load += new System.EventHandler(this.Editare_Load);
             this.pnl_editare.ResumeLayout(false);
             this.pnl_editare.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileExplorerAssistant1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -194,5 +202,6 @@
         private TextBox txt_edit_username;
         private TextBox txt_edit_categorie;
         private Button txt_edit_save;
+        private DevExpress.XtraDialogs.FileExplorerAssistant fileExplorerAssistant1;
     }
 }
