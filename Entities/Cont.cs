@@ -21,7 +21,7 @@ namespace PassOrganiser.Entities
             id = generateRandomID();
         }
 
-        public Cont(string categorie, string userName, string password, string description)
+        public Cont( string categorie, string userName, string password, string description )
         {
             id = generateRandomID();
             this.categorie = categorie;
@@ -30,14 +30,14 @@ namespace PassOrganiser.Entities
             this.description = description;
             this.concatAllProperties = concatProperties();
         }
-        public Cont ( long id, string categorie, string userName, string password, string description )
+        public Cont( long id, string categorie, string userName, string password, string description )
         {
             this.id = id;
             this.categorie = categorie;
             this.userName = userName;
             this.password = password;
             this.description = description;
-            this.concatAllProperties = concatProperties ();
+            this.concatAllProperties = concatProperties();
         }
 
         private long generateRandomID()
@@ -48,7 +48,7 @@ namespace PassOrganiser.Entities
 
         }
 
-        public override bool Equals(object? obj)
+        public override bool Equals( object? obj )
         {
             return obj is Cont cont &&
                    categorie == cont.categorie &&
@@ -64,14 +64,14 @@ namespace PassOrganiser.Entities
 
         public override string? ToString()
         {
-            return "username = " + userName + "\n" 
-                + "parola = " + password ;
+            return "username = " + userName + "\n"
+                + "parola = " + password;
         }
 
         private string concatProperties()
         {
             return Regex.Replace(
-                (categorie + userName + description).ToLower(), @"\d|\W", "");
+                ( categorie + userName + description ).ToLower(), @"\d|\W", "");
         }
     }
 }

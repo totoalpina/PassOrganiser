@@ -21,12 +21,12 @@ namespace PassOrganiser.Forms
         public Editare()
         {
             InitializeComponent();
-            
+
         }
-        
-        private void Editare_Load ( object sender, EventArgs e )
+
+        private void Editare_Load( object sender, EventArgs e )
         {
-            
+
             txt_edit_categorie.Text = editCont.categorie;
             txt_edit_username.Text = editCont.userName;
             txt_edit_password.Text = editCont.password;
@@ -34,9 +34,9 @@ namespace PassOrganiser.Forms
 
         }
 
-        private void txt_edit_save_Click ( object sender, EventArgs e )
+        private void txt_edit_save_Click( object sender, EventArgs e )
         {
-            dbConnection conn = new dbConnection ();
+            dbConnection conn = new dbConnection();
             string query =
                 $"UPDATE conturi " +
                 "SET " +
@@ -50,7 +50,7 @@ namespace PassOrganiser.Forms
 
         }
 
-        private void Editare_FormClosed ( object sender, FormClosedEventArgs e )
+        private void Editare_FormClosed( object sender, FormClosedEventArgs e )
         {
             RefToAdaugare.Show();
         }
