@@ -28,7 +28,7 @@ namespace PassOrganiser
             if ( (txt_UserName.Text.Trim().ToLower() != "" && txt_Password.Text != "" &&
                 !txt_Password.Text.Contains("'") && !txt_Password.Text.Contains(";")) || txt_fastline.Text != "" )
             {
-                if ( (conn.verifyLoginFields(txt_UserName.Text.Trim().ToLower(), txt_Password.Text.Trim().ToLower()) || conn.verifyLoginFastLine(txt_fastline.Text)))
+                if ( conn.VerifyLoginFields(txt_UserName.Text.Trim().ToLower(), txt_Password.Text.Trim().ToLower()) || conn.VerifyLoginFastLine(txt_fastline.Text))
                 {
                     afiseazaFormAdauga();
                 }
@@ -58,7 +58,7 @@ namespace PassOrganiser
                 dbConnection conn = new dbConnection();
                 if ( txt_UserName.Text.Trim().ToLower() != "" && txt_Password.Text != "" )
                 {
-                    if ( conn.verifyLoginFields(txt_UserName.Text.Trim().ToLower(), txt_Password.Text.Trim().ToLower()) )
+                    if ( conn.VerifyLoginFields(txt_UserName.Text.Trim().ToLower(), txt_Password.Text.Trim().ToLower()) )
                     {
                         afiseazaFormAdauga();
                     }
@@ -84,7 +84,7 @@ namespace PassOrganiser
 
                 if (  txt_fastline.Text != "" )
                 {
-                    if ( conn.verifyLoginFastLine(txt_fastline.Text))
+                    if ( conn.VerifyLoginFastLine(txt_fastline.Text))
                     {
                         afiseazaFormAdauga();
                     }

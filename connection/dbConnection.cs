@@ -6,39 +6,44 @@ namespace PassOrganiser.connection
 {
     public class dbConnection
     {
-
         private MySqlConnection connection;
         private string server;
         private string database;
         private string uid;
         private string password;
 
-        //Constructor
-        public dbConnection ( )
+        public dbConnection()
         {
-            Initialize ();
+            Initialize();
         }
 
-        //Initialize values
-        private void Initialize ( )
+        /// <summary>
+        /// Constructs the connection string and initialize the connection.
+        /// </summary>
+        private void Initialize()
         {
-            server = "localhost";
-            database = "password_organiser";
-            uid = "root";
-            password = "783326";
-            string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+            server = System.Environment.GetEnvironmentVariable("server", EnvironmentVariableTarget.Machine);
+            database = System.Environment.GetEnvironmentVariable("database", EnvironmentVariableTarget.Machine);
+            uid = System.Environment.GetEnvironmentVariable("UID", EnvironmentVariableTarget.Machine);
+            password = System.Environment.GetEnvironmentVariable("password", EnvironmentVariableTarget.Machine);
 
+            string connectionString = "SERVER=" + server + ";" + 
+                                      "DATABASE=" + database + ";" + 
+                                      "UID=" + uid + ";" + 
+                                      "PASSWORD=" + password + ";";
 
-            connection = new MySqlConnection (connectionString);
+            connection = new MySqlConnection(connectionString);
         }
 
-        //open connection to database
-        private bool OpenConnection ( )
+        /// <summary>
+        /// Opens a MySql connection.
+        /// </summary>
+        /// <returns>bool</returns>
+        private bool OpenConnection()
         {
             try
             {
-                connection.Open ();
+                connection.Open();
                 return true;
             }
             catch ( MySqlException ex )
@@ -46,150 +51,179 @@ namespace PassOrganiser.connection
                 switch ( ex.Number )
                 {
                     case 0:
-                        MessageBox.Show ("Cannot connect to server.  Contact administrator");
+                        MessageBox.Show("Cannot connect to server.  Contact administrator");
                         break;
 
                     case 1045:
-                        MessageBox.Show ("Invalid username/password, please try again");
+                        MessageBox.Show("Invalid username/password, please try again");
                         break;
                 }
                 return false;
             }
         }
 
-        //Close connection
-        private bool CloseConnection ( )
+        /// <summary>
+        /// Closes the MySql connection.
+        /// </summary>
+        /// <returns>bool</returns>
+        private bool CloseConnection()
         {
             try
             {
-                connection.Close ();
+                connection.Close();
                 return true;
             }
             catch ( MySqlException ex )
             {
-                MessageBox.Show (ex.Message);
+                MessageBox.Show(ex.Message);
                 return false;
             }
         }
 
-        public void Insert ( string query )
+        /// <summary>
+        /// Persists in the database the object creted by the values from the form fields
+        /// </summary>
+        /// <param name="query">string "query"</param>
+        /// <returns>void</returns>
+        public void Insert( string query )
         {
-            if ( this.OpenConnection () == true )
+            if ( this.OpenConnection() == true )
             {
-                //create command and assign the query and connection from the constructor
-                MySqlCommand cmd = new MySqlCommand (query, connection);
-
-                //Execute command
-                cmd.ExecuteNonQuery ();
-
-                //close connection
-                this.CloseConnection ();
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+                this.CloseConnection();
             }
         }
-        // Select cont by ID 
-        public Cont selectCont ( long id )
+
+        /// <summary>
+        /// Select a Cont object based of the provided id
+        /// </summary>
+        /// <param name="id">long id</param>
+        /// <returns>Cont object</returns>
+        public Cont SelectCont( long id )
         {
             string query = "SELECT * FROM conturi WHERE id = " + id + ";";
-            Cont editCont = new Cont ();
-            if ( this.OpenConnection () == true )
+            Cont editCont = new Cont();
+            if ( this.OpenConnection() == true )
             {
-                MySqlCommand cmd = new MySqlCommand (query, connection);
-                MySqlDataReader dr = cmd.ExecuteReader ();
-                while ( dr.Read () )
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while ( dr.Read() )
                 {
-                    editCont.id = long.Parse (dr [ "id" ].ToString ());
-                    editCont.userName = dr [ "username" ].ToString ();
-                    editCont.password = dr [ "password" ].ToString ();
-                    editCont.categorie = dr [ "categorie" ].ToString ();
-                    editCont.description = dr [ "description" ].ToString ();
+                    editCont.id = long.Parse(dr[ "id" ].ToString());
+                    editCont.userName = dr[ "username" ].ToString();
+                    editCont.password = dr[ "password" ].ToString();
+                    editCont.categorie = dr[ "categorie" ].ToString();
+                    editCont.description = dr[ "description" ].ToString();
                 }
-                this.CloseConnection ();
+                this.CloseConnection();
             }
 
             return editCont;
         }
 
-        //Update statement
-        public void Update ( string query )
+        /// <summary>
+        /// Updates the selected object in the database
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns>void</returns>
+        public void Update( string query )
         {
-            if ( this.OpenConnection () == true )
+            if ( this.OpenConnection() == true )
             {
-                //create mysql command
-                MySqlCommand cmd = new MySqlCommand ();
-                //Assign the query using CommandText
+                MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = query;
-                //Assign the connection using Connection
                 cmd.Connection = connection;
 
-                //Execute query
-                string message = cmd.ExecuteNonQuery () > 0 ? "Inregistrare editata cu succes" : "Editare esuata";
-                MessageBox.Show (message);
-                //close connection
-                this.CloseConnection ();
+                string message = cmd.ExecuteNonQuery() > 0 ? "Inregistrare editata cu succes" : "Editare esuata";
+                MessageBox.Show(message);
+                this.CloseConnection();
             }
         }
 
-        //Delete statement
-        public void Delete ( string query )
+        /// <summary>
+        /// Deletes the selected object
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns>void</returns>
+        public void Delete( string query )
         {
-            if ( this.OpenConnection () == true )
+            if ( this.OpenConnection() == true )
             {
-                MySqlCommand cmd = new MySqlCommand (query, connection);
-                cmd.ExecuteNonQuery ();
-                this.CloseConnection ();
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+                this.CloseConnection();
             }
         }
 
-        public List<Cont> SelectAll ( )
+        /// <summary>
+        /// Returns a list with all the objects from the database
+        /// </summary>
+        /// <returns>a list of Cont objects</returns>
+        public List<Cont> SelectAll()
         {
-            List<Cont> allitems = new List<Cont> ();
-            if ( this.OpenConnection () == true )
+            List<Cont> allitems = new List<Cont>();
+            if ( this.OpenConnection() == true )
             {
                 string query = "SELECT * FROM conturi;";
 
-                MySqlCommand cmd = new MySqlCommand (query, connection);
-                MySqlDataReader dataReader = cmd.ExecuteReader ();
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                while ( dataReader.Read () )
+                while ( dataReader.Read() )
                 {
-                    allitems.Add (new Cont (long.Parse (dataReader [ "id" ].ToString ()), dataReader [ "categorie" ].ToString (), dataReader [ "username" ].ToString (), dataReader [ "password" ].ToString (), dataReader [ "description" ].ToString ()));
-
+                    allitems.Add(new Cont(long.Parse(dataReader[ "id" ].ToString()),
+                                                    dataReader[ "categorie" ].ToString(),
+                                                     dataReader[ "username" ].ToString(),
+                                                     dataReader[ "password" ].ToString(),
+                                                   dataReader[ "description" ].ToString()));
                 }
-                dataReader.Close ();
-                this.CloseConnection ();
+                dataReader.Close();
+                this.CloseConnection();
                 return allitems;
             }
             return allitems;
         }
 
-        public List<Cont> Search ( string query )
+        /// <summary>
+        /// Search by a provided string and returns a collection of matching objects.
+        /// Takes a query string wich contains the searching string from the searching filed in the winform.
+        /// </summary>
+        /// <param name="query">string query</param>
+        /// <returns>a list of object that match the search criteria</returns>
+        public List<Cont> Search( string query )
         {
-            List<Cont> searchList = new List<Cont> ();
-            if ( this.OpenConnection () == true )
+            List<Cont> searchList = new List<Cont>();
+            if ( this.OpenConnection() == true )
             {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
 
-
-                MySqlCommand cmd = new MySqlCommand (query, connection);
-                MySqlDataReader dataReader = cmd.ExecuteReader ();
-
-                while ( dataReader.Read () )
+                while ( dataReader.Read() )
                 {
-                    searchList.Add (new Cont (
-                                        long.Parse (dataReader [ "id" ].ToString ()),
-                                        dataReader [ "categorie" ].ToString (), 
-                                        dataReader [ "username" ].ToString (), 
-                                        dataReader [ "password" ].ToString (), 
-                                        dataReader [ "description" ].ToString ())
+                    searchList.Add(new Cont(
+                                        long.Parse(dataReader[ "id" ].ToString()),
+                                             dataReader[ "categorie" ].ToString(),
+                                              dataReader[ "username" ].ToString(),
+                                              dataReader[ "password" ].ToString(),
+                                            dataReader[ "description" ].ToString())
                                         );
                 }
-                dataReader.Close ();
-                this.CloseConnection ();
+                dataReader.Close();
+                this.CloseConnection();
                 return searchList;
             }
             return searchList;
         }
 
-        public bool verifyLoginFields ( string username, string pass )
+        /// <summary>
+        /// Verify if the values from fields corresponds to a user in database.
+        /// Returns true if user exists, or false if doesn't
+        /// </summary>
+        /// <param name="username">string - username</param>
+        /// <param name="pass">string - password</param>
+        /// <returns>bool</returns>
+        public bool VerifyLoginFields( string username, string pass )
         {
             MySqlDataReader dataReader;
             string query = $"SELECT * FROM users WHERE " +
@@ -197,18 +231,18 @@ namespace PassOrganiser.connection
                            $" AND password = '{pass}';";
             try
             {
-                if (CloseConnection())
+                if ( CloseConnection() )
                 {
                     connection.Open();
                 }
-                
-                MySqlCommand cmd = new MySqlCommand (query, connection);
-                dataReader = cmd.ExecuteReader ();
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                dataReader = cmd.ExecuteReader();
                 if ( dataReader.HasRows )
                 {
                     return true;
                 }
-                else 
+                else
                 {
                     return false;
                 }
@@ -216,23 +250,28 @@ namespace PassOrganiser.connection
             }
             catch ( MySqlException ex )
             {
-                MessageBox.Show ("Username sau password gresite. Please try again");
+                MessageBox.Show("Username sau password gresite. Please try again");
                 return false;
             }
-            dataReader.Close ();
-            this.CloseConnection ();
-
+            dataReader.Close();
+            this.CloseConnection();
         }
-
-        public bool verifyLoginFastLine( string fastline )
+        /// <summary>
+        /// Fastline is a concept of introducing a predefined format of different values separated by a predefined character. 
+        /// Verify if the value from field about username and password are contained in the database.
+        /// Tha values for username and password come in single string separated by a "space"."
+        /// Returns true if user exists, or false if doesn't.
+        /// </summary>
+        /// <param name="fastline"> strig containing username and password separated by a "space"</param>
+        /// <returns>bool</returns>
+        public bool VerifyLoginFastLine( string fastline )
         {
             MySqlDataReader dataReader;
             string[ ] connCredentials = fastline.Split(" ");
-            string username = connCredentials[0].Trim().ToLower();
-            string pass = connCredentials[1].Trim().ToLower();
+            string username = connCredentials[ 0 ].Trim().ToLower();
+            string pass = connCredentials[ 1 ].Trim().ToLower();
 
-            return verifyLoginFields(username, pass);
-
+            return VerifyLoginFields(username, pass);
         }
     }
 }

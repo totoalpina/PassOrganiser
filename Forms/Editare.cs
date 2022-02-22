@@ -14,8 +14,17 @@ namespace PassOrganiser.Forms
 {
     public partial class Editare : Form
     {
+        /// <summary>
+        /// Holds the id that will be updated.
+        /// </summary>
         public long id { get; set; }
+        /// <summary>
+        /// Object that will be updated.
+        /// </summary>
         public Cont editCont { get; set; }
+        /// <summary>
+        /// A reference to AdaugaInformatii form used to connect the behavior of application.
+        /// </summary>
         public Form RefToAdaugare { get; set; }
 
         public Editare()

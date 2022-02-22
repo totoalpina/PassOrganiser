@@ -49,32 +49,22 @@ namespace PassOrganiser
 
         private void btn_adauga_informatii_Click( object sender, EventArgs e )
         {
-            Cont c = new(txt_categorie.Text, txt_username.Text,
-                              txt_parola.Text, rTxt_descriere.Text);
-            string query = "INSERT INTO conturi (id, categorie, username, password, description) " +
-                            "VALUES (" + c.id + ", '" + c.categorie + "' , '" + c.userName + "' , '"
-                            + c.password + "' , '" + c.description + "' );";
+            Cont c = new(txt_categorie.Text, 
+                 txt_username.Text,
+                 txt_parola.Text, 
+                rTxt_descriere.Text);
+
+            string query = $"INSERT INTO conturi (id, categorie, username, password, description) " +
+                           $"VALUES ({c.id}, '{c.categorie}', '{c.userName}', '{c.password}', '{c.description}');";
 
             conn.Insert(query);
-            txt_categorie.Clear();
-            txt_username.Clear();
-            txt_parola.Clear();
-            rTxt_descriere.Clear();
+            clearTextFields();
             MessageBox.Show("Inregistrare resuita");
         }
 
         private void btn_cauta_Click( object sender, EventArgs e )
         {
-            List<Cont> searchedList = new();
-            /*foreach ( var cont in list )
-            {
-                if ( cont.concatAllProperties.Contains(txt_cauta.Text.ToLower()) )
-                {
-                    searchedList.Add(cont);
-                }
-            }*/
-
-            searchedList = list.Where(cont =>
+             List<Cont> searchedList = list.Where(cont =>
                     cont.concatAllProperties.Contains(txt_cauta.Text.ToLower()))
                 .ToList();
 
@@ -83,9 +73,9 @@ namespace PassOrganiser
 
         private void dgrd_cautare_CellDoubleClick( object sender, DataGridViewCellEventArgs e )
         {
-            Editare editare = new Editare();
+            Editare editare = new();
             editare.id = long.Parse(dgrd_cautare.Rows[ dgrd_cautare.CurrentRow.Index ].Cells[ 0 ].Value.ToString());
-            editare.editCont = conn.selectCont(editare.id);
+            editare.editCont = conn.SelectCont(editare.id);
             editare.RefToAdaugare = this;
             this.Visible = false;
             editare.ShowDialog();
@@ -126,17 +116,16 @@ namespace PassOrganiser
         {
             if ( e.KeyChar == ( char ) Keys.Return )
             {
-                Cont c = new Cont(txt_categorie.Text, txt_username.Text,
-                    txt_parola.Text, rTxt_descriere.Text);
-                string query = "INSERT INTO conturi (id, categorie, username, password, description) " +
-                               "VALUES (" + c.id + ", '" + c.categorie + "' , '" + c.userName + "' , '"
-                               + c.password + "' , '" + c.description + "' );";
+                Cont c = new Cont(txt_categorie.Text, 
+                          txt_username.Text,
+                          txt_parola.Text, 
+                        rTxt_descriere.Text);
+
+                string query = $"INSERT INTO conturi (id, categorie, username, password, description) " +
+                               $"VALUES ({c.id}, '{c.categorie}', '{c.userName}', '{c.password}', '{c.description}');";
 
                 conn.Insert(query);
-                txt_categorie.Clear();
-                txt_username.Clear();
-                txt_parola.Clear();
-                rTxt_descriere.Clear();
+                clearTextFields();
                 MessageBox.Show("Inregistrare resuita");
             }
         }
@@ -152,14 +141,9 @@ namespace PassOrganiser
         {
             if ( e.KeyChar == ( char ) Keys.Return )
             {
-                List<Cont> searchedList = new List<Cont>();
-                foreach ( var cont in list )
-                {
-                    if ( cont.concatAllProperties.Contains(txt_cauta.Text.ToLower()) )
-                    {
-                        searchedList.Add(cont);
-                    }
-                }
+                 List<Cont> searchedList = list
+                    .Where(c => c.concatAllProperties.Contains(txt_cauta.Text.ToLower()))
+                    .ToList();
 
                 dgrd_cautare.DataSource = searchedList;
             }
@@ -199,6 +183,14 @@ namespace PassOrganiser
                 list = conn.SelectAll();
                 dgrd_cautare.DataSource = list;
             }
+        }
+
+        private void clearTextFields()
+        {
+            txt_categorie.Clear();
+            txt_username.Clear();
+            txt_parola.Clear();
+            rTxt_descriere.Clear();
         }
     }
 }

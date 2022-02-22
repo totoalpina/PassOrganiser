@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.pnl_main = new System.Windows.Forms.Panel();
+            this.pnl_mesaj_inchidere = new System.Windows.Forms.Panel();
+            this.lbl_adio = new System.Windows.Forms.Label();
             this.txt_fastline = new System.Windows.Forms.TextBox();
             this.lbl = new System.Windows.Forms.Label();
             this.btn_intra = new System.Windows.Forms.Button();
@@ -36,8 +38,6 @@
             this.lbl_UserName = new System.Windows.Forms.Label();
             this.txt_Password = new System.Windows.Forms.TextBox();
             this.txt_UserName = new System.Windows.Forms.TextBox();
-            this.pnl_mesaj_inchidere = new System.Windows.Forms.Panel();
-            this.lbl_adio = new System.Windows.Forms.Label();
             this.pnl_main.SuspendLayout();
             this.pnl_mesaj_inchidere.SuspendLayout();
             this.SuspendLayout();
@@ -61,6 +61,26 @@
             this.pnl_main.Size = new System.Drawing.Size(560, 337);
             this.pnl_main.TabIndex = 0;
             // 
+            // pnl_mesaj_inchidere
+            // 
+            this.pnl_mesaj_inchidere.Controls.Add(this.lbl_adio);
+            this.pnl_mesaj_inchidere.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnl_mesaj_inchidere.Location = new System.Drawing.Point(0, 253);
+            this.pnl_mesaj_inchidere.Name = "pnl_mesaj_inchidere";
+            this.pnl_mesaj_inchidere.Size = new System.Drawing.Size(560, 84);
+            this.pnl_mesaj_inchidere.TabIndex = 1;
+            // 
+            // lbl_adio
+            // 
+            this.lbl_adio.AutoSize = true;
+            this.lbl_adio.Font = new System.Drawing.Font("Cascadia Mono", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_adio.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.lbl_adio.Location = new System.Drawing.Point(71, 221);
+            this.lbl_adio.Name = "lbl_adio";
+            this.lbl_adio.Size = new System.Drawing.Size(405, 20);
+            this.lbl_adio.TabIndex = 0;
+            this.lbl_adio.Text = "ATI AJUNS LA FINAL !!  INCHIDETI APLICATIA !";
+            // 
             // txt_fastline
             // 
             this.txt_fastline.Location = new System.Drawing.Point(196, 84);
@@ -68,7 +88,6 @@
             this.txt_fastline.PasswordChar = '*';
             this.txt_fastline.Size = new System.Drawing.Size(215, 21);
             this.txt_fastline.TabIndex = 0;
-            this.txt_fastline.Text = "ioana ioana";
             this.txt_fastline.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_fastline_KeyPress);
             // 
             // lbl
@@ -132,7 +151,6 @@
             this.txt_Password.PasswordChar = '*';
             this.txt_Password.Size = new System.Drawing.Size(215, 21);
             this.txt_Password.TabIndex = 1;
-            this.txt_Password.Text = "ioana";
             this.txt_Password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Password_KeyPress);
             // 
             // txt_UserName
@@ -145,28 +163,7 @@
             this.txt_UserName.Name = "txt_UserName";
             this.txt_UserName.Size = new System.Drawing.Size(215, 21);
             this.txt_UserName.TabIndex = 0;
-            this.txt_UserName.Text = "ioana";
             this.txt_UserName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_UserName_KeyPress);
-            // 
-            // pnl_mesaj_inchidere
-            // 
-            this.pnl_mesaj_inchidere.Controls.Add(this.lbl_adio);
-            this.pnl_mesaj_inchidere.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnl_mesaj_inchidere.Location = new System.Drawing.Point(0, 253);
-            this.pnl_mesaj_inchidere.Name = "pnl_mesaj_inchidere";
-            this.pnl_mesaj_inchidere.Size = new System.Drawing.Size(560, 84);
-            this.pnl_mesaj_inchidere.TabIndex = 1;
-            // 
-            // lbl_adio
-            // 
-            this.lbl_adio.AutoSize = true;
-            this.lbl_adio.Font = new System.Drawing.Font("Cascadia Mono", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_adio.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.lbl_adio.Location = new System.Drawing.Point(71, 221);
-            this.lbl_adio.Name = "lbl_adio";
-            this.lbl_adio.Size = new System.Drawing.Size(405, 20);
-            this.lbl_adio.TabIndex = 0;
-            this.lbl_adio.Text = "ATI AJUNS LA FINAL !!  INCHIDETI APLICATIA !";
             // 
             // frm_main
             // 
