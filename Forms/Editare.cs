@@ -16,6 +16,7 @@ namespace PassOrganiser.Forms
     {
         public long id { get; set; }
         public Cont editCont { get; set; }
+        public Form RefToAdaugare { get; set; }
 
         public Editare()
         {
@@ -47,6 +48,11 @@ namespace PassOrganiser.Forms
                     $"id = {id}; ";
             conn.Update(query);
 
+        }
+
+        private void Editare_FormClosed ( object sender, FormClosedEventArgs e )
+        {
+            RefToAdaugare.Show();
         }
     }
 }

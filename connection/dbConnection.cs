@@ -174,8 +174,13 @@ namespace PassOrganiser.connection
 
                 while ( dataReader.Read () )
                 {
-                    searchList.Add (new Cont (long.Parse (dataReader [ "id" ].ToString ()), dataReader [ "categorie" ].ToString (), dataReader [ "username" ].ToString (), dataReader [ "password" ].ToString (), dataReader [ "description" ].ToString ()));
-
+                    searchList.Add (new Cont (
+                                        long.Parse (dataReader [ "id" ].ToString ()),
+                                        dataReader [ "categorie" ].ToString (), 
+                                        dataReader [ "username" ].ToString (), 
+                                        dataReader [ "password" ].ToString (), 
+                                        dataReader [ "description" ].ToString ())
+                                        );
                 }
                 dataReader.Close ();
                 this.CloseConnection ();

@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using DevExpress.Mvvm.Native;
 using DevExpress.Utils.Extensions;
 using PassOrganiser.connection;
@@ -21,9 +22,7 @@ namespace PassOrganiser
         dbConnection conn = new dbConnection();
         private void AdaugInformatii_FormClosed(object sender, FormClosedEventArgs e)
         {
-
             Application.Exit();
-
 
         }
 
@@ -62,6 +61,8 @@ namespace PassOrganiser
             Editare editare = new Editare();
             editare.id = long.Parse (dgrd_cautare.Rows [ dgrd_cautare.CurrentRow.Index ].Cells [ 0 ].Value.ToString ());
             editare.editCont = conn.selectCont(editare.id);
+            editare.RefToAdaugare = this;
+            this.Visible = false;
             editare.ShowDialog();
         }
 
@@ -69,9 +70,13 @@ namespace PassOrganiser
         {
             list = conn.SelectAll();
             dgrd_cautare.DataSource = list;
-            
+
             dgrd_cautare.Columns [ "id" ].Visible = false;
             dgrd_cautare.Columns [ "concatAllProperties" ].Visible = false;
+            dgrd_cautare.Columns["categorie"].HeaderText = "Categorie";
+            dgrd_cautare.Columns["userName"].HeaderText = "User Name";
+            dgrd_cautare.Columns["password"].HeaderText = "Password";
+            dgrd_cautare.Columns["description"].HeaderText = "Description";
         }
 
         private void btn_refresh_Click ( object sender, EventArgs e )
@@ -126,6 +131,8 @@ namespace PassOrganiser
         
         private void AdaugInformatii_Shown ( object sender, EventArgs e )
         {
+            pnl_cautare.Location = new Point (3, 3);
+            pnl_adaugare.Visible = false;
             txt_categorie.Focus ();
         }
 
@@ -144,6 +151,44 @@ namespace PassOrganiser
 
                 dgrd_cautare.DataSource = searchedList;
             }
+        }
+
+        private void btn_open_adauga_pnl_Click ( object sender, EventArgs e )
+        {
+            pnl_adaugare.Location = new Point(3, 3);
+            pnl_cautare.Visible = false;
+            pnl_adaugare.Visible = true;
+        }
+
+        private void button1_Click ( object sender, EventArgs e )
+        {
+            pnl_adaugare.Visible = false;
+            pnl_cautare.Visible = true;
+        }
+
+        private void button2_Click ( object sender, EventArgs e )
+        {
+            long deleteId = 0;
+            if ( dgrd_cautare.CurrentRow == null)
+            {
+                MessageBox.Show ("Please select a record to delete!");
+            }
+            else
+            {
+                deleteId = long.Parse (dgrd_cautare.Rows [ dgrd_cautare.CurrentRow.Index ].Cells [ 0 ].Value.ToString ());
+            }
+            
+            string query = $"DELETE FROM conturi WHERE id = {deleteId}";
+            ;
+            if ( deleteId != 0 && MessageBox.Show ("Doriti sa stergeti informatia?", "Confirmare stergere!", MessageBoxButtons.YesNo)  == DialogResult.Yes )
+            {
+                conn.Delete(query);
+                list.Clear ();
+                list = conn.SelectAll ();
+                dgrd_cautare.DataSource = list;
+            }
+            
+            
         }
     }
 }

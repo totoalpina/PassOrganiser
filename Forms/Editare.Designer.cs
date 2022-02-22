@@ -181,6 +181,7 @@
             this.Name = "Editare";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Editare cont";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Editare_FormClosed);
             this.Load += new System.EventHandler(this.Editare_Load);
             this.pnl_editare.ResumeLayout(false);
             this.pnl_editare.PerformLayout();
