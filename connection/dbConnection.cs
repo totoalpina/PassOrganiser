@@ -189,7 +189,7 @@ namespace PassOrganiser.connection
             return searchList;
         }
 
-        public bool verifyLogin ( string username, string pass )
+        public bool verifyLoginFields ( string username, string pass )
         {
             MySqlDataReader dataReader;
             string query = $"SELECT * FROM users WHERE " +
@@ -197,16 +197,19 @@ namespace PassOrganiser.connection
                            $" AND password = '{pass}';";
             try
             {
-                connection.Open ();
+                if (CloseConnection())
+                {
+                    connection.Open();
+                }
+                
                 MySqlCommand cmd = new MySqlCommand (query, connection);
                 dataReader = cmd.ExecuteReader ();
                 if ( dataReader.HasRows )
                 {
                     return true;
                 }
-                else
+                else 
                 {
-                    MessageBox.Show ("Stai jos 4 !");
                     return false;
                 }
 
@@ -218,6 +221,17 @@ namespace PassOrganiser.connection
             }
             dataReader.Close ();
             this.CloseConnection ();
+
+        }
+
+        public bool verifyLoginFastLine( string fastline )
+        {
+            MySqlDataReader dataReader;
+            string[ ] connCredentials = fastline.Split(" ");
+            string username = connCredentials[0].Trim().ToLower();
+            string pass = connCredentials[1].Trim().ToLower();
+
+            return verifyLoginFields(username, pass);
 
         }
     }

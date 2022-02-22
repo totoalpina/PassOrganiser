@@ -22,48 +22,16 @@ namespace PassOrganiser
         dbConnection conn = new dbConnection();
         private void AdaugInformatii_FormClosed( object sender, FormClosedEventArgs e )
         {
-            Application.Exit();
-
-        }
-
-        private void btn_adauga_informatii_Click( object sender, EventArgs e )
-        {
-            Cont c = new Cont(txt_categorie.Text, txt_username.Text,
-                              txt_parola.Text, rTxt_descriere.Text);
-            string query = "INSERT INTO conturi (id, categorie, username, password, description) " +
-                            "VALUES (" + c.id + ", '" + c.categorie + "' , '" + c.userName + "' , '"
-                            + c.password + "' , '" + c.description + "' );";
-
-            conn.Insert(query);
-            txt_categorie.Clear();
-            txt_username.Clear();
-            txt_parola.Clear();
-            rTxt_descriere.Clear();
-            MessageBox.Show("Inregistrare resuita");
-        }
-
-        private void btn_cauta_Click( object sender, EventArgs e )
-        {
-            List<Cont> searchedList = new List<Cont>();
-            foreach ( var cont in list )
+            if (MessageBox.Show("Doriti sa inchideti aplicatia?",
+                    "Confirmare inchidere!", MessageBoxButtons.YesNo) ==
+                DialogResult.Yes)
             {
-                if ( cont.concatAllProperties.Contains(txt_cauta.Text.ToLower()) )
-                {
-                    searchedList.Add(cont);
-                }
+                Application.Exit();
             }
-
-            dgrd_cautare.DataSource = searchedList;
-        }
-
-        private void dgrd_cautare_CellDoubleClick( object sender, DataGridViewCellEventArgs e )
-        {
-            Editare editare = new Editare();
-            editare.id = long.Parse(dgrd_cautare.Rows[ dgrd_cautare.CurrentRow.Index ].Cells[ 0 ].Value.ToString());
-            editare.editCont = conn.selectCont(editare.id);
-            editare.RefToAdaugare = this;
-            this.Visible = false;
-            editare.ShowDialog();
+            else
+            {
+                RefToConectare.Visible = true;
+            }
         }
 
         private void AdaugInformatii_Load( object sender, EventArgs e )
@@ -79,6 +47,50 @@ namespace PassOrganiser
             dgrd_cautare.Columns[ "description" ].HeaderText = "Description";
         }
 
+        private void btn_adauga_informatii_Click( object sender, EventArgs e )
+        {
+            Cont c = new(txt_categorie.Text, txt_username.Text,
+                              txt_parola.Text, rTxt_descriere.Text);
+            string query = "INSERT INTO conturi (id, categorie, username, password, description) " +
+                            "VALUES (" + c.id + ", '" + c.categorie + "' , '" + c.userName + "' , '"
+                            + c.password + "' , '" + c.description + "' );";
+
+            conn.Insert(query);
+            txt_categorie.Clear();
+            txt_username.Clear();
+            txt_parola.Clear();
+            rTxt_descriere.Clear();
+            MessageBox.Show("Inregistrare resuita");
+        }
+
+        private void btn_cauta_Click( object sender, EventArgs e )
+        {
+            List<Cont> searchedList = new();
+            /*foreach ( var cont in list )
+            {
+                if ( cont.concatAllProperties.Contains(txt_cauta.Text.ToLower()) )
+                {
+                    searchedList.Add(cont);
+                }
+            }*/
+
+            searchedList = list.Where(cont =>
+                    cont.concatAllProperties.Contains(txt_cauta.Text.ToLower()))
+                .ToList();
+
+            dgrd_cautare.DataSource = searchedList;
+        }
+
+        private void dgrd_cautare_CellDoubleClick( object sender, DataGridViewCellEventArgs e )
+        {
+            Editare editare = new Editare();
+            editare.id = long.Parse(dgrd_cautare.Rows[ dgrd_cautare.CurrentRow.Index ].Cells[ 0 ].Value.ToString());
+            editare.editCont = conn.selectCont(editare.id);
+            editare.RefToAdaugare = this;
+            this.Visible = false;
+            editare.ShowDialog();
+        }
+        
         private void btn_refresh_Click( object sender, EventArgs e )
         {
             list.Clear();
@@ -160,13 +172,13 @@ namespace PassOrganiser
             pnl_adaugare.Visible = true;
         }
 
-        private void button1_Click( object sender, EventArgs e )
+        private void btn_inapoi_cautare_Click( object sender, EventArgs e )
         {
             pnl_adaugare.Visible = false;
             pnl_cautare.Visible = true;
         }
 
-        private void button2_Click( object sender, EventArgs e )
+        private void btn_delete_Click( object sender, EventArgs e )
         {
             long deleteId = 0;
             if ( dgrd_cautare.CurrentRow == null )

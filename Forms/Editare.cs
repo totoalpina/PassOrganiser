@@ -36,7 +36,7 @@ namespace PassOrganiser.Forms
 
         private void txt_edit_save_Click( object sender, EventArgs e )
         {
-            dbConnection conn = new dbConnection();
+            dbConnection conn = new();
             string query =
                 $"UPDATE conturi " +
                 "SET " +

@@ -36,7 +36,10 @@
             this.lbl_UserName = new System.Windows.Forms.Label();
             this.txt_Password = new System.Windows.Forms.TextBox();
             this.txt_UserName = new System.Windows.Forms.TextBox();
+            this.pnl_mesaj_inchidere = new System.Windows.Forms.Panel();
+            this.lbl_adio = new System.Windows.Forms.Label();
             this.pnl_main.SuspendLayout();
+            this.pnl_mesaj_inchidere.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_main
@@ -45,6 +48,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnl_main.BackColor = System.Drawing.Color.SkyBlue;
+            this.pnl_main.Controls.Add(this.pnl_mesaj_inchidere);
             this.pnl_main.Controls.Add(this.txt_fastline);
             this.pnl_main.Controls.Add(this.lbl);
             this.pnl_main.Controls.Add(this.btn_intra);
@@ -144,6 +148,26 @@
             this.txt_UserName.Text = "ioana";
             this.txt_UserName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_UserName_KeyPress);
             // 
+            // pnl_mesaj_inchidere
+            // 
+            this.pnl_mesaj_inchidere.Controls.Add(this.lbl_adio);
+            this.pnl_mesaj_inchidere.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnl_mesaj_inchidere.Location = new System.Drawing.Point(0, 253);
+            this.pnl_mesaj_inchidere.Name = "pnl_mesaj_inchidere";
+            this.pnl_mesaj_inchidere.Size = new System.Drawing.Size(560, 84);
+            this.pnl_mesaj_inchidere.TabIndex = 1;
+            // 
+            // lbl_adio
+            // 
+            this.lbl_adio.AutoSize = true;
+            this.lbl_adio.Font = new System.Drawing.Font("Cascadia Mono", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_adio.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.lbl_adio.Location = new System.Drawing.Point(71, 221);
+            this.lbl_adio.Name = "lbl_adio";
+            this.lbl_adio.Size = new System.Drawing.Size(405, 20);
+            this.lbl_adio.TabIndex = 0;
+            this.lbl_adio.Text = "ATI AJUNS LA FINAL !!  INCHIDETI APLICATIA !";
+            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -160,6 +184,8 @@
             this.Text = "PassOrganiser";
             this.pnl_main.ResumeLayout(false);
             this.pnl_main.PerformLayout();
+            this.pnl_mesaj_inchidere.ResumeLayout(false);
+            this.pnl_mesaj_inchidere.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -174,5 +200,7 @@
         private Button btn_intra;
         private TextBox txt_fastline;
         private Label lbl;
+        private Panel pnl_mesaj_inchidere;
+        private Label lbl_adio;
     }
 }
