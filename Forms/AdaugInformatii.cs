@@ -20,6 +20,7 @@ namespace PassOrganiser
         }
 
         dbConnection conn = new dbConnection();
+
         private void AdaugInformatii_FormClosed( object sender, FormClosedEventArgs e )
         {
             if (MessageBox.Show("Doriti sa inchideti aplicatia?",

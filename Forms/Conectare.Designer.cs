@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnl_main = new System.Windows.Forms.Panel();
+            this.lbl_descriere_fastline = new System.Windows.Forms.Label();
             this.pnl_mesaj_inchidere = new System.Windows.Forms.Panel();
             this.lbl_adio = new System.Windows.Forms.Label();
             this.txt_fastline = new System.Windows.Forms.TextBox();
@@ -48,7 +49,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnl_main.BackColor = System.Drawing.Color.SkyBlue;
-            this.pnl_main.Controls.Add(this.pnl_mesaj_inchidere);
+            this.pnl_main.Controls.Add(this.lbl_descriere_fastline);
             this.pnl_main.Controls.Add(this.txt_fastline);
             this.pnl_main.Controls.Add(this.lbl);
             this.pnl_main.Controls.Add(this.btn_intra);
@@ -61,11 +62,19 @@
             this.pnl_main.Size = new System.Drawing.Size(560, 337);
             this.pnl_main.TabIndex = 0;
             // 
+            // lbl_descriere_fastline
+            // 
+            this.lbl_descriere_fastline.AutoSize = true;
+            this.lbl_descriere_fastline.Location = new System.Drawing.Point(196, 65);
+            this.lbl_descriere_fastline.Name = "lbl_descriere_fastline";
+            this.lbl_descriere_fastline.Size = new System.Drawing.Size(182, 16);
+            this.lbl_descriere_fastline.TabIndex = 6;
+            this.lbl_descriere_fastline.Text = "username[ spatiu ]pasword";
+            // 
             // pnl_mesaj_inchidere
             // 
             this.pnl_mesaj_inchidere.Controls.Add(this.lbl_adio);
-            this.pnl_mesaj_inchidere.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnl_mesaj_inchidere.Location = new System.Drawing.Point(0, 253);
+            this.pnl_mesaj_inchidere.Location = new System.Drawing.Point(96, 355);
             this.pnl_mesaj_inchidere.Name = "pnl_mesaj_inchidere";
             this.pnl_mesaj_inchidere.Size = new System.Drawing.Size(560, 84);
             this.pnl_mesaj_inchidere.TabIndex = 1;
@@ -88,6 +97,8 @@
             this.txt_fastline.PasswordChar = '*';
             this.txt_fastline.Size = new System.Drawing.Size(215, 21);
             this.txt_fastline.TabIndex = 0;
+            this.txt_fastline.TextChanged += new System.EventHandler(this.txt_fastline_TextChanged);
+            this.txt_fastline.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_fastline_KeyDown);
             this.txt_fastline.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_fastline_KeyPress);
             // 
             // lbl
@@ -172,6 +183,7 @@
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(584, 361);
             this.Controls.Add(this.pnl_main);
+            this.Controls.Add(this.pnl_mesaj_inchidere);
             this.Font = new System.Drawing.Font("Cascadia Mono", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.MaximumSize = new System.Drawing.Size(600, 400);
@@ -199,5 +211,6 @@
         private Label lbl;
         private Panel pnl_mesaj_inchidere;
         private Label lbl_adio;
+        private Label lbl_descriere_fastline;
     }
 }
