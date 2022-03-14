@@ -1,8 +1,9 @@
-﻿using System.Data;
-using System.Windows.Controls;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
-using DevExpress.Mvvm.Native;
-using DevExpress.Utils.Extensions;
 using PassOrganiser.connection;
 using PassOrganiser.Entities;
 using PassOrganiser.Forms;
@@ -192,6 +193,20 @@ namespace PassOrganiser
             txt_username.Clear();
             txt_parola.Clear();
             rTxt_descriere.Clear();
+        }
+
+        private void afiseazaDosareJson()
+        {
+            DosareJson dosareJson = new DosareJson();
+            dosareJson.RefToAdauga = this;
+            this.Visible = false;
+
+            dosareJson.Show();
+        }
+
+        private void btn_form_dosare_Click( object sender, EventArgs e )
+        {
+            afiseazaDosareJson();
         }
     }
 }

@@ -642,6 +642,12 @@ $RECYCLE.BIN/
 
 # JetBrains Rider
 
+# NDepend
+NDependOut/
+
+#SonarQube
+.sonarqube/
+
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 

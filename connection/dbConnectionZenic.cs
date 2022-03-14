@@ -1,10 +1,14 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using PassOrganiser.Entities;
+
 
 namespace PassOrganiser.connection
 {
-    public class dbConnection
+    public class dbConnectionZenic
     {
         private MySqlConnection connection;
         private string server;
@@ -12,7 +16,7 @@ namespace PassOrganiser.connection
         private string uid;
         private string password;
 
-        public dbConnection()
+        public dbConnectionZenic()
         {
             Initialize();
         }
@@ -23,7 +27,7 @@ namespace PassOrganiser.connection
         private void Initialize()
         {
             server = System.Environment.GetEnvironmentVariable("server", EnvironmentVariableTarget.Machine);
-            database = System.Environment.GetEnvironmentVariable("database", EnvironmentVariableTarget.Machine);
+            database = "mazilu_si_asociatii";
             uid = System.Environment.GetEnvironmentVariable("UID", EnvironmentVariableTarget.Machine);
             password = System.Environment.GetEnvironmentVariable("password", EnvironmentVariableTarget.Machine);
 
@@ -160,29 +164,49 @@ namespace PassOrganiser.connection
         /// Returns a list with all the objects from the database
         /// </summary>
         /// <returns>a list of Cont objects</returns>
-        public List<Cont> SelectAll()
+        public string  SelectAll()
         {
-            List<Cont> allitems = new List<Cont>();
+            var dosareJson = "";
+            List<Dosare> dosare = new List<Dosare>();
             if ( this.OpenConnection() == true )
             {
-                string query = "SELECT * FROM conturi;";
+                string query = "SELECT dosare.id, " +
+                               "dosare.id_debitor, " +
+                               "dosare.id_creditor, " +
+                               "dosare.nr_dosar, " +
+                               "dosare.titlu_executoriu, " +
+                               "persoane.persoana AS creditor, " +
+                               "persoane.adresa_formatata AS adresa_creditor, " +
+                               "persoane_1.persoana AS debitor, " +
+                               "persoane_1.cif_cnp AS d_cif_cnp, " +
+                               "persoane_1.adresa_formatata AS adresa_debitor " +
+                               "FROM dosare " +
+                               "LEFT OUTER JOIN persoane persoane_1 ON dosare.id_debitor = persoane_1.id " +
+                               "LEFT OUTER JOIN persoane ON persoane.id = dosare.id_creditor " +
+                               "WHERE (dosar_finalizat IN (0, 4)) AND (notificare = 0) ORDER BY ordonare_dosare DESC LIMIT 200;";
 
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
                 while ( dataReader.Read() )
                 {
-                    allitems.Add(new Cont(long.Parse(dataReader[ "id" ].ToString()),
-                                                    dataReader[ "categorie" ].ToString(),
-                                                     dataReader[ "username" ].ToString(),
-                                                     dataReader[ "password" ].ToString(),
-                                                   dataReader[ "description" ].ToString()));
+                    dosare.Add(new Dosare(
+                        dataReader["id"].ToString(),
+                        dataReader["id_debitor"].ToString(),
+                        dataReader["id_creditor"].ToString(),
+                        dataReader["nr_dosar"].ToString(),
+                        dataReader["creditor"].ToString(),
+                        dataReader["adresa_creditor"].ToString(),
+                        dataReader["debitor"].ToString(),
+                        dataReader["d_cif_cnp"].ToString(),
+                        dataReader["adresa_debitor"].ToString(),
+                        dataReader["titlu_executoriu"].ToString()));
                 }
                 dataReader.Close();
                 this.CloseConnection();
-                return allitems;
+                dosareJson = JsonConvert.SerializeObject(dosare);
             }
-            return allitems;
+            return dosareJson;
         }
 
         /// <summary>

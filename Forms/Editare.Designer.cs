@@ -40,9 +40,9 @@
             this.txt_edit_password = new System.Windows.Forms.TextBox();
             this.txt_edit_username = new System.Windows.Forms.TextBox();
             this.txt_edit_categorie = new System.Windows.Forms.TextBox();
-            this.fileExplorerAssistant1 = new DevExpress.XtraDialogs.FileExplorerAssistant(this.components);
+            
             this.pnl_editare.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileExplorerAssistant1)).BeginInit();
+           
             this.SuspendLayout();
             // 
             // pnl_editare
@@ -167,7 +167,7 @@
             // 
             // fileExplorerAssistant1
             // 
-            this.fileExplorerAssistant1.Form = this;
+            
             // 
             // Editare
             // 
@@ -185,7 +185,7 @@
             this.Load += new System.EventHandler(this.Editare_Load);
             this.pnl_editare.ResumeLayout(false);
             this.pnl_editare.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileExplorerAssistant1)).EndInit();
+            
             this.ResumeLayout(false);
 
         }
@@ -203,6 +203,6 @@
         private TextBox txt_edit_username;
         private TextBox txt_edit_categorie;
         private Button txt_edit_save;
-        private DevExpress.XtraDialogs.FileExplorerAssistant fileExplorerAssistant1;
+        
     }
 }
